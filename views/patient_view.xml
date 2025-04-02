@@ -136,11 +136,11 @@
                 <field name="patient_diastolic_bp_line_graph"/>
                 <field name="patient_spo2_line_graph"/>
 
-                <templates>
+                <templates> 
                     <t t-name="kanban-box">
                         <div id="acs_hms_dashboard" class="o_kanban_view o_kanban_record">
                             <div class="row">
-                                <span t-esc="record.grpah_data_filter.raw_value"/>
+                                <span t-field="grpah_data_filter"/>
                                 <div class="btn-group col-4 mt8 mb8" role="group" aria-label="Filters">
                                     <button t-attf-class="btn #{record.grpah_data_filter.raw_value=='today' ? 'btn-primary' : 'btn-secondary'}" type="object" name="today_data">Today</button>
                                     <button t-attf-class="btn #{record.grpah_data_filter.raw_value=='week' ? 'btn-primary' : 'btn-secondary'}" type="object" name="week_data">This Week</button>
@@ -269,7 +269,7 @@
                                     </div>
                                 </div>
                             </div>
-
+    
                         </div>
                     </t>
                 </templates>

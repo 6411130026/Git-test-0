@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
-# ╔══════════════════════════════════════════════════════════════════════╗
-# ║                                                                      ║
-# ║                  ╔═══╦╗       ╔╗  ╔╗     ╔═══╦═══╗                   ║
-# ║                  ║╔═╗║║       ║║ ╔╝╚╗    ║╔═╗║╔═╗║                   ║
-# ║                  ║║ ║║║╔╗╔╦╦══╣╚═╬╗╔╬╗ ╔╗║║ ╚╣╚══╗                   ║
-# ║                  ║╚═╝║║║╚╝╠╣╔╗║╔╗║║║║║ ║║║║ ╔╬══╗║                   ║
-# ║                  ║╔═╗║╚╣║║║║╚╝║║║║║╚╣╚═╝║║╚═╝║╚═╝║                   ║
-# ║                  ╚╝ ╚╩═╩╩╩╩╩═╗╠╝╚╝╚═╩═╗╔╝╚═══╩═══╝                   ║
-# ║                            ╔═╝║     ╔═╝║                             ║
-# ║                            ╚══╝     ╚══╝                             ║
-# ║                  SOFTWARE DEVELOPED AND SUPPORTED BY                 ║
-# ║                ALMIGHTY CONSULTING SOLUTIONS PVT. LTD.               ║
-# ║                      COPYRIGHT (C) 2016 - TODAY                      ║
-# ║                      https://www.almightycs.com                      ║
-# ║                                                                      ║
-# ╚══════════════════════════════════════════════════════════════════════╝
+#╔══════════════════════════════════════════════════════════════════════╗
+#║                                                                      ║
+#║                  ╔═══╦╗       ╔╗  ╔╗     ╔═══╦═══╗                   ║
+#║                  ║╔═╗║║       ║║ ╔╝╚╗    ║╔═╗║╔═╗║                   ║
+#║                  ║║ ║║║╔╗╔╦╦══╣╚═╬╗╔╬╗ ╔╗║║ ╚╣╚══╗                   ║
+#║                  ║╚═╝║║║╚╝╠╣╔╗║╔╗║║║║║ ║║║║ ╔╬══╗║                   ║
+#║                  ║╔═╗║╚╣║║║║╚╝║║║║║╚╣╚═╝║║╚═╝║╚═╝║                   ║
+#║                  ╚╝ ╚╩═╩╩╩╩╩═╗╠╝╚╝╚═╩═╗╔╝╚═══╩═══╝                   ║
+#║                            ╔═╝║     ╔═╝║                             ║
+#║                            ╚══╝     ╚══╝                             ║
+#║                  SOFTWARE DEVELOPED AND SUPPORTED BY                 ║
+#║                ALMIGHTY CONSULTING SOLUTIONS PVT. LTD.               ║
+#║                      COPYRIGHT (C) 2016 - TODAY                      ║
+#║                      https://www.almightycs.com                      ║
+#║                                                                      ║
+#╚══════════════════════════════════════════════════════════════════════╝
 {
     'name': 'Hospital Management System ( HMS by AlmightyCS )',
     'summary': 'Hospital Management System for managing Hospital and medical facilities flows',
@@ -70,13 +70,12 @@
         servicios de salud administración de la salud administración de la salud departamento de salud
          gestión hospitalaria sistema de información gestión hospitalaria odoo hms odoo
     """,
-    'version': '16.0.0.0.3',
+    'version': '1.1.25',
     'category': 'Medical',
-    'author': 'Phurichaya Isariyadol , Almighty Consulting Solutions Pvt. Ltd.',
+    'author': 'Almighty Consulting Solutions Pvt. Ltd.',
     'support': 'info@almightycs.com',
     'website': 'https://www.almightycs.com',
     'license': 'OPL-1',
-
     'depends': ['acs_hms_base', 'web_timer_widget', 'website'],
     'data': [
         'security/security.xml',
@@ -91,7 +90,7 @@
         'data/sequence.xml',
         'data/mail_template.xml',
         'data/hms_data.xml',
-
+        
         'wizard/cancel_reason_view.xml',
 
         'views/hms_base_views.xml',
@@ -107,17 +106,10 @@
         'views/resource_cal.xml',
         'views/medical_alert.xml',
         'views/account_view.xml',
-        # 'views/template.xml',
+        'views/template.xml',
         'views/res_config_settings_views.xml',
         'views/menu_item.xml',
     ],
-    'assets': {
-            'web.assets_backend': [
-                'acs_hms/static/src/js/graph_widget.js',
-                'acs_hms/static/src/xml/graph_widget.xml',
-                'acs_hms/static/src/scss/custom.scss',
-            ],
-        },
     'demo': [
         'demo/doctor_demo.xml',
         'demo/patient_demo.xml',

@@ -6,8 +6,6 @@ from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from datetime import date, datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
-from odoo.exceptions import MissingError
-
 
 class AppointmentPurpose(models.Model):
     _name = 'appointment.purpose'
@@ -235,14 +233,13 @@ class Appointment(models.Model):
         This function opens a window to compose an email, with the template message loaded by default
         '''
         self.ensure_one()
-        if not self.exists():
-            raise MissingError("The appointment record does not exist or has been deleted.")
+        ir_model_data = self.env['ir.model.data']
         try:
-            template_id = self.env.ref('acs_hms.acs_appointment_email').id
+            template_id = ir_model_data.get_object_reference('acs_hms', 'acs_appointment_email')[1]
         except ValueError:
             template_id = False
         try:
-            compose_form_id = self.env.ref('mail.email_compose_message_wizard_form').id
+            compose_form_id = ir_model_data.get_object_reference('mail', 'email_compose_message_wizard_form')[1]
         except ValueError:
             compose_form_id = False
         ctx = {

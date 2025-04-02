@@ -143,7 +143,7 @@
                 <field name="cabin_id" optional="hide"/>
                 <field name="patient_id"/>
                 <field name="date"/>
-                <field name="department_id" optional="hide"/>
+                <field name="department_id" groups="acs_hms.group_allow_multi_department" optional="hide"/>
                 <field name="physician_id"/>
                 <field name="responsible_id" optional="hide"/>
                 <field name="create_uid" optional="hide"/>
@@ -167,18 +167,18 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                    <button name="appointment_confirm" states="draft" type="object" string="Confirm" class="oe_highlight"/>
-                    <button name="appointment_waiting" states="confirm" type="object" string="Waiting" class="oe_highlight"/>
+                    <button name="appointment_confirm" states="draft" type="object" groups="acs_hms.group_hms_receptionist" string="Confirm" class="oe_highlight"/>
+                    <button name="appointment_waiting" states="confirm" type="object" groups="acs_hms.group_hms_receptionist" string="Waiting" class="oe_highlight"/>
                     <button name="print_report" string="Print" type="object" states="draft,confirm"/>
                     <button name="action_appointment_send" string="Send by Email" type="object" states="draft,confirm"/>
-                    <button name="appointment_consultation" states="waiting" type="object" string="In Consultation" class="oe_highlight"/>
-                    <button name="action_pause" states="in_consultation" type="object" string="Pause"/>
-                    <button name="action_start_paused" states="pause" type="object" string="Start"/>
-                    <button name="button_pres_req" string="Create Prescription" type="object" states="in_consultation,invoiced" class="oe_highlight"/>
-                    <button name="consultation_done" states="in_consultation" type="object" string="Consultation Done" class="oe_highlight"/>
-                    <button name="create_invoice" string="Create Invoice" attrs="{'invisible': ['|',('invoice_id','!=',False),('state','!=','to_invoice')]}" type="object" class="oe_highlight"/>
-                    <button name="create_invoice" string="Create Invoice" attrs="{'invisible': ['|','|','|',('anytime_invoice','=',False),('invoice_id','!=',False),('state','=','to_invoice'), ('no_invoice','=', True)]}" type="object" class="oe_highlight"/>
-                    <button name="create_invoice" string="Create Invoice" attrs="{'invisible': ['|','|','|',('advance_invoice','=',False),('invoice_id','!=',False),('state','=','to_invoice'), ('no_invoice','=', True)]}" type="object" class="oe_highlight"/>
+                    <button name="appointment_consultation" states="waiting" groups="acs_hms.group_hms_jr_doctor" type="object" string="In Consultation" class="oe_highlight"/>
+                    <button name="action_pause" states="in_consultation" groups="acs_hms.group_allow_consultation_pause" type="object" string="Pause"/>
+                    <button name="action_start_paused" states="pause" groups="acs_hms.group_allow_consultation_pause" type="object" string="Start"/>
+                    <button name="button_pres_req" string="Create Prescription" groups="acs_hms.group_hms_jr_doctor" type="object" states="in_consultation,invoiced" class="oe_highlight"/>
+                    <button name="consultation_done" states="in_consultation" groups="acs_hms.group_hms_jr_doctor" type="object" string="Consultation Done" class="oe_highlight"/>
+                    <button name="create_invoice" string="Create Invoice" groups="account.group_account_invoice" attrs="{'invisible': ['|',('invoice_id','!=',False),('state','!=','to_invoice')]}" type="object" class="oe_highlight"/>
+                    <button name="create_invoice" string="Create Invoice" groups="account.group_account_invoice" attrs="{'invisible': ['|','|','|',('anytime_invoice','=',False),('invoice_id','!=',False),('state','=','to_invoice'), ('no_invoice','=', True)]}" type="object" class="oe_highlight"/>
+                    <button name="create_invoice" string="Create Invoice" groups="account.group_account_invoice" attrs="{'invisible': ['|','|','|',('advance_invoice','=',False),('invoice_id','!=',False),('state','=','to_invoice'), ('no_invoice','=', True)]}" type="object" class="oe_highlight"/>
                     <button name="create_consumed_prod_invoice" string="Create Consumable's Invoice" groups="account.group_account_invoice" attrs="{'invisible': ['|','|','|','|','|',('advance_invoice','=',False),('invoice_id','=',False),('state','=','done'), ('no_invoice','=', True),('consumable_line_ids','=',[]),('consumable_invoice_id','!=',False)]}" type="object" class="oe_highlight"/>
                     <button name="%(action_acs_cancel_reason)d" string="Cancel" states="draft,confirm,waiting,in_consultation" type="action"/>
                     <!-- <button name="appointment_cancel" string="Cancel" states="draft,confirm,waiting,in_consultation" type="object" class="oe_highlight"/> -->
@@ -192,7 +192,7 @@
                     <field name="medical_alert_ids" nolabel="1" widget="many2many_tags"/>
                 </div>
                 <sheet>
-                    <div class="oe_button_box" name="button_box">
+                    <div class="oe_button_box" name="button_box" groups="acs_hms.group_hms_receptionist">
                         <button name="action_refer_doctor" string="Refer. To" type="object" states="in_consultation,invoiced" class="oe_stat_button" icon="fa-pencil-square-o"/>
                         <button name="action_prescription" string="Prescription" type="object" class="oe_stat_button" icon="fa-pencil-square-o"  attrs="{'invisible': [('state','=','done'),('prescription_ids', '=', False)]}"/>
                         <button name="view_invoice" string="View Invoice" groups="account.group_account_invoice" type="object" class="oe_stat_button" icon="fa-pencil-square-o"/>
@@ -212,7 +212,7 @@
                         <group>
                             <field name="patient_id"/>
                             <field name="age"/>
-                            <field name="department_id" />
+                            <field name="department_id" groups="acs_hms.group_allow_multi_department"/>
                             <field name="department_type" invisible="1"/>
                             <field name="physician_id" required="1"/>
                             <field name="cabin_id"/>
@@ -237,7 +237,7 @@
                         <page name="info" string="General Information">
                             <group>
                                 <group>
-                                    <field name="diseases_ids" widget="many2many_tags" />
+                                    <field name="diseases_ids" widget="many2many_tags" groups="acs_hms.group_hms_nurse"/>
                                     <field name="outside_appointment"/>
                                 </group>
                                 <group>
@@ -247,15 +247,15 @@
                             </group>
                             <separator string="Chief Complaints"/>
                             <field name="chief_complain" placeholder="Chief Complaints..."/>
-                            <separator string="History of Present Illness" />
-                            <field name="present_illness" placeholder="History of Present Illness..."/>
-                            <separator string="Past History" />
-                            <field name="past_history" placeholder="Past History..." />
+                            <separator string="History of Present Illness" groups="acs_hms.group_hms_nurse"/>
+                            <field name="present_illness" placeholder="History of Present Illness..." groups="acs_hms.group_hms_nurse"/>
+                            <separator string="Past History" groups="acs_hms.group_hms_nurse"/>
+                            <field name="past_history" placeholder="Past History..." groups="acs_hms.group_hms_nurse"/>
                             <separator string="Cancel Reason" attrs="{'invisible': [('state','!=','cancel')]}"/>
                             <field name="cancel_reason" placeholder="Cancellation Reason..." attrs="{'invisible': [('state','!=','cancel')]}"/>
                         </page>
-                        <page name="clinical_ass" string="Clinical Assesment" >
-                            <div>NOTE: Details are shown based on Patient Evaluation.
+                        <page name="clinical_ass" string="Clinical Assesment" groups="acs_hms.group_hms_nurse">
+                            <div>NOTE: Details are shown based on Patient Evaluation. 
                                 <t attrs="{'invisible': [('evaluation_id','=',False)]}">Last Appointment: <field name="evaluation_id" nolabel="1" class="oe_link"/></t>
                                 <t attrs="{'invisible': [('evaluation_id','!=',False)]}"><button name="action_create_evaluation" type="object" string="Create Evaluation" class=" oe_link"/></t>
                             </div>
@@ -288,19 +288,19 @@
                             <separator string="Radiological"/>
                             <field name="radiological_report" placeholder="Radiological Report..."/>
                         </page>
-                        <page name="advice" string="D/D &amp; Advice">
+                        <page name="advice" string="D/D &amp; Advice" groups="acs_hms.group_hms_jr_doctor,acs_hms.group_acs_hms_appointment_user">
                             <separator string="Differential Diagnosis"/>
                             <field name="differencial_diagnosis" placeholder="Differential Diagnosis..."/>
                             <separator string="Medical Advice"/>
                             <field name="medical_advice" placeholder="Medical Advice..."/>
                         </page>
-                        <page name='diseases' string="Disease History">
+                        <page name='diseases' string="Disease History" groups="acs_hms.group_hms_jr_doctor">
                             <separator string="Past Medical History"/>
                             <field name="medical_history"/>
                             <separator string="Diseases History"/>
                             <field name="patient_diseases_ids"/>
                         </page>
-                        <page name="consumed_products" string="Consumed Products">
+                        <page name="consumed_products" string="Consumed Products" groups="acs_hms.group_hms_jr_doctor,acs_hms.group_acs_hms_appointment_user">
                             <field name="consumable_line_ids" nolabel="1" colspan="4">
                                 <tree string="Line" editable="top">
                                     <field name="product_id" expand="1" required="1" domain="[('tracking','=','none')]"/>
@@ -311,20 +311,19 @@
                                 </tree>
                             </field>
                         </page>
-                        <page name="other_info" string="Other Information">
+                        <page name="other_info" string="Other Information" groups="acs_hms.group_hms_receptionist">
                             <group name="extra_info">
                                 <group>
                                     <field name="treatment_id" domain="[('patient_id','=', patient_id)]" context="{'default_patient_id': patient_id, 'default_department_id': department_id, 'default_physician_id': physician_id}"/>
                                     <field name="ref_physician_id"/>
-                                    <field name="no_invoice"/>
-<!--                                     groups="acs_hms_base.group_acs_invoice_exemption"-->
+                                    <field name="no_invoice" groups="acs_hms_base.group_acs_invoice_exemption"/>
                                 </group>
                                 <group>
                                     <field name="consultation_type"/>
                                     <field name="product_id" required="1" context="{'default_type':'service','default_hospital_product_type':'consultation'}"/>
                                     <field name="pricelist_id" groups="product.group_product_pricelist" options="{'no_open':True,'no_create': True}"/>
-                                    <field name="company_id" options="{'no_create': True}"/>
-                                </group>
+                                    <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                </group>                           
                             </group>
                             <field name="invoice_id" invisible="1"/>
                             <field name="waiting_date_start" invisible="1"/>
@@ -357,7 +356,7 @@
                 <field name="purpose_id"/>
                 <field name="cabin_id"/>
                 <field name="treatment_id"/>
-                <field name="department_id"/>
+                <field name="department_id" groups="acs_hms.group_allow_multi_department"/>
                 <field name="ref_physician_id"/>
                 <filter name="today" string="Today" domain="[('date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
                 <filter name="my_app" string="My Appointments" domain="[('physician_id.user_id', '=',uid)]"/>

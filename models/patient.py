@@ -193,7 +193,7 @@ class ACSPatient(models.Model):
 
 class ACSFamilyMember(models.Model):
     _name = 'acs.family.member'
-    _description = 'Family Member'
+    _description= 'Family Member'
 
     related_patient_id = fields.Many2one('hms.patient', string='Family Member', help='Family Member Name', required=True)    
     patient_id = fields.Many2one('hms.patient', string='Patient')
